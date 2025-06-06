@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AliBar\\Documents\\Training\\ZooManagement\\ZooManagement.csproj": {}
+    "C:\\Users\\PreKri\\Training\\CSharp\\ZooManagement\\ZooManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AliBar\\Documents\\Training\\ZooManagement\\ZooManagement.csproj": {
+    "C:\\Users\\PreKri\\Training\\CSharp\\ZooManagement\\ZooManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AliBar\\Documents\\Training\\ZooManagement\\ZooManagement.csproj",
+        "projectUniqueName": "C:\\Users\\PreKri\\Training\\CSharp\\ZooManagement\\ZooManagement.csproj",
         "projectName": "ZooManagement",
-        "projectPath": "C:\\Users\\AliBar\\Documents\\Training\\ZooManagement\\ZooManagement.csproj",
-        "packagesPath": "C:\\Users\\AliBar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AliBar\\Documents\\Training\\ZooManagement\\obj\\",
+        "projectPath": "C:\\Users\\PreKri\\Training\\CSharp\\ZooManagement\\ZooManagement.csproj",
+        "packagesPath": "C:\\Users\\PreKri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PreKri\\Training\\CSharp\\ZooManagement\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\AliBar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\PreKri\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,12 +37,17 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "EFCore.AutomaticMigrations": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -81,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.410/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

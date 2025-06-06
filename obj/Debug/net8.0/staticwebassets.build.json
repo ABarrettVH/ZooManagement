@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "8Ys5z6wEAIzYdGxdJz4TbhzvDAFXxhX8NHql18SuqWo=",
-  "Source": "ZooManagement",
-  "BasePath": "_content/ZooManagement",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"PrIIs4YWepdRK6MIV++qWYAZANG3GOmiIdE/sc6XnH0=","Source":"ZooManagement","BasePath":"_content/ZooManagement","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
