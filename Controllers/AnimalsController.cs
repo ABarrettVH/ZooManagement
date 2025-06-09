@@ -38,7 +38,7 @@ public class AnimalController : ControllerBase
         }
         else {
         var animals = _context.Animals.ToList();
-        var animal = animals.FirstOrDefault(u => u.AnimalID == id);
+        var animal = animals.FirstOrDefault(u => u.Id == id);
         if (animal != null)
         {
             return Ok(animal);

@@ -10,8 +10,8 @@ using ZooManagementDB;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(ZooManagementDBContext))]
-    [Migration("20250606095632_DBContextSeeding")]
-    partial class DBContextSeeding
+    [Migration("20250608224806_seed12")]
+    partial class seed12
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace ZooManagement.Migrations
 
             modelBuilder.Entity("ZooManagement.Animal", b =>
                 {
-                    b.Property<int>("AnimalID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -37,33 +37,15 @@ namespace ZooManagement.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Sex")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Sex")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Species")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AnimalID");
+                    b.HasKey("Id");
 
                     b.ToTable("Animals");
-
-                    b.HasData(
-                        new
-                        {
-                            AnimalID = 1,
-                            DOB = "09/10/2021",
-                            Name = "Ed",
-                            Sex = 0,
-                            Species = "Lion"
-                        },
-                        new
-                        {
-                            AnimalID = 2,
-                            DOB = "08/12/2015",
-                            Name = "Mary",
-                            Sex = 0,
-                            Species = "Elephant"
-                        });
                 });
 #pragma warning restore 612, 618
         }

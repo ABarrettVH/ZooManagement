@@ -18,7 +18,7 @@ namespace ZooManagement.Migrations
 
             modelBuilder.Entity("ZooManagement.Animal", b =>
                 {
-                    b.Property<int>("AnimalID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -40,111 +40,9 @@ namespace ZooManagement.Migrations
                     b.Property<string>("Species")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AnimalID");
+                    b.HasKey("Id");
 
                     b.ToTable("Animals");
-
-                    b.HasData(
-                        new
-                        {
-                            AnimalID = 1,
-                            ArrivedAtZoo = "14/06/2022",
-                            Classification = "Mammal",
-                            DOB = "09/10/2021",
-                            Name = "Ed",
-                            Sex = "Male",
-                            Species = "Lion"
-                        },
-                        new
-                        {
-                            AnimalID = 2,
-                            ArrivedAtZoo = "10/10/2010",
-                            Classification = "Mammals",
-                            DOB = "08/12/2015",
-                            Name = "Mary",
-                            Sex = "Female",
-                            Species = "Elephant"
-                        },
-                        new
-                        {
-                            AnimalID = 3,
-                            ArrivedAtZoo = "24/06/2022",
-                            Classification = "Mammal",
-                            DOB = "12/05/2014",
-                            Name = "Harry",
-                            Sex = "Male",
-                            Species = "Panda"
-                        },
-                        new
-                        {
-                            AnimalID = 4,
-                            ArrivedAtZoo = "14/08/2019",
-                            Classification = "Bird",
-                            DOB = "18/11/2017",
-                            Name = "Kelly",
-                            Sex = "Female",
-                            Species = "Parrot"
-                        },
-                        new
-                        {
-                            AnimalID = 5,
-                            ArrivedAtZoo = "17/10/2022",
-                            Classification = "Amphibian",
-                            DOB = "23/10/2002",
-                            Name = "Bob",
-                            Sex = "Male",
-                            Species = "Frog"
-                        },
-                        new
-                        {
-                            AnimalID = 6,
-                            ArrivedAtZoo = "19/12/2020",
-                            Classification = "Reptile",
-                            DOB = "01/01/2019",
-                            Name = "Lisa",
-                            Sex = "Female",
-                            Species = "Python"
-                        },
-                        new
-                        {
-                            AnimalID = 7,
-                            ArrivedAtZoo = "21/07/2022",
-                            Classification = "Mammal",
-                            DOB = "30/08/2021",
-                            Name = "Valerie",
-                            Sex = "Female",
-                            Species = "Zebra"
-                        },
-                        new
-                        {
-                            AnimalID = 8,
-                            ArrivedAtZoo = "06/11/2021",
-                            Classification = "Fish",
-                            DOB = "07/12/2019",
-                            Name = "Michael",
-                            Sex = "Male",
-                            Species = "Shark"
-                        },
-                        new
-                        {
-                            AnimalID = 9,
-                            ArrivedAtZoo = "20/02/2020",
-                            Classification = "Mammal",
-                            DOB = "09/04/2011",
-                            Name = "Sarah",
-                            Sex = "Female",
-                            Species = "Elephant"
-                        },
-                        new
-                        {
-                            AnimalID = 10,
-                            ArrivedAtZoo = "02/10/2021",
-                            Classification = "Mammal",
-                            DOB = "05/04/2019",
-                            Name = "Sophie",
-                            Sex = "Female",
-                            Species = "Lion"
-                        });
                 });
 #pragma warning restore 612, 618
         }

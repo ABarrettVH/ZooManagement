@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "yFQMrlN2myA=",
+  "dgSpecHash": "niitytnQQqg=",
   "success": true,
   "projectFilePath": "C:\\Users\\PreKri\\Training\\CSharp\\ZooManagement\\ZooManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PreKri\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\PreKri\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\PreKri\\.nuget\\packages\\bogus\\35.6.3\\bogus.35.6.3.nupkg.sha512",
     "C:\\Users\\PreKri\\.nuget\\packages\\efcore.automaticmigrations\\8.0.0\\efcore.automaticmigrations.8.0.0.nupkg.sha512",
     "C:\\Users\\PreKri\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\PreKri\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

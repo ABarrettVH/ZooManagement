@@ -5,7 +5,7 @@
 namespace ZooManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class DBContextSeeding3 : Migration
+    public partial class seed13 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
