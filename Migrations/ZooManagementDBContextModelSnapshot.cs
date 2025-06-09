@@ -18,7 +18,7 @@ namespace ZooManagement.Migrations
 
             modelBuilder.Entity("ZooManagement.Animal", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AnimalId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -34,6 +34,9 @@ namespace ZooManagement.Migrations
                     b.Property<string>("DOB")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EnclosureID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -43,9 +46,23 @@ namespace ZooManagement.Migrations
                     b.Property<string>("Species")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("AnimalId");
 
                     b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("ZooManagement.Enclosure", b =>
+                {
+                    b.Property<int>("EnclosureID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EnclosureName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("EnclosureID");
+
+                    b.ToTable("Enclosure");
                 });
 #pragma warning restore 612, 618
         }

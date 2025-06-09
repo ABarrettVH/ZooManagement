@@ -18,22 +18,32 @@ builder.Services.AddDbContext<ZooManagementDBContext>(
    options.UseSqlite("Filename=MyDatabase.db")
    .UseSeeding((context, _) =>
    {
-          int count = 30;
-    
-              for (int i = 1; i <= count; i++)
-              {
+       int count = 20;
+
+       for (int i = 1; i <= count; i++)
+       {
            var animalExists = context.Set<Animal>().Any();
+           var enclosureExists = context.Set<Enclosure>().Any();
+           if (!enclosureExists)
+           {
+               Enclosure newEnclosure = FakeData.createEnclosure();
+               context.Set<Enclosure>().Add(newEnclosure);
+               context.SaveChanges();
+           }
 
            if (!animalExists)
            {
                Animal newAnimal = FakeData.generateFakeAnimalData();
-               Console.WriteLine(newAnimal.Id);
+
+               //    Console.WriteLine(newAnimal.AnimalId);
                context.Set<Animal>().Add(newAnimal);
-               //    context.Set<Animal>().AddRange(newAnimal);
+
 
            }
+
        }
-       context.SaveChanges();
+        context.SaveChanges();
+       
    })
 //    .UseAsyncSeeding(async (context, _, CancellationToken) =>
 //    {

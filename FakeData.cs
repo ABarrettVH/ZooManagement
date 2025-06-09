@@ -8,10 +8,10 @@ namespace ZooManagement;
 
 public class FakeData
 
-{    
+{
     public static Animal generateFakeAnimalData()
     {
-        List<string> AnimalSpecies = new List<string> { "Tiger", "Elephant", "Lion", "Giraffe", "Flamingo", "Owl" };
+        List<string> AnimalSpecies = new List<string> { "lion", "giraffe", "flamingo", "owl", "lizard", "hippopotamus", "aligator", "parrot","python" };
         Animal animal = new Animal();
 
         // var id = 0;
@@ -23,17 +23,23 @@ public class FakeData
 
         switch (animal.Species)
         {
-            case "Tiger":
-            case "Lion":
+            case "lion":
                 animal.Classification = "carnivore";
                 break;
-            case "Elephant":
-            case "Giraffe":
+            case "elephant":
+            case "giraffe":
+            case "hippopotamus":
                 animal.Classification = "mammal";
                 break;
-            case "Flamingo":
-            case "Owl":
+            case "flamingo":
+            case "owl":
+            case "parrot":
                 animal.Classification = "aviary";
+                break;
+            case "aligator":
+            case "lizard":
+            case "python":
+                animal.Classification = "reptile";
                 break;
 
         }
@@ -41,46 +47,61 @@ public class FakeData
         var nameSexMap = new Dictionary<string, string>
         {
 
-            {"Ed", "male"},
-            {"Rob", "male"},
-            {"Mark", "male"},
-            {"Peter", "male"},
-            {"JJ", "male"},
-            {"Jasper","male"},
-            {"Jane", "female"},
-            {"Joy", "female"},
-            {"Christina", "female"},
-            {"Harriet", "female"},
-            {"AJ", "female"},
-            {"Dolly", "female"}
+            {"ed", "male"},
+            {"rob", "male"},
+            {"mark", "male"},
+            {"peter", "male"},
+            {"jj", "male"},
+            {"jasper","male"},
+            {"jane", "female"},
+            {"joy", "female"},
+            {"christina", "female"},
+            {"harriet", "female"},
+            {"aj", "female"},
+            {"dolly", "female"}
         };
 
         string randomNameKey = nameSexMap.Keys.ElementAt(random.Next(nameSexMap.Count));
         animal.Name = randomNameKey;
-        animal.Sex = nameSexMap[$"{randomNameKey}"];       
+        animal.Sex = nameSexMap[$"{randomNameKey}"];
 
         DateOnly startDateDOB = new DateOnly(2010, 1, 1);
         DateOnly endDateDOB = new DateOnly(2015, 12, 31);
 
         int range = random.Next(1, 10);
         DateOnly randomDOB = startDateDOB.AddDays(random.Next(range));
+        randomDOB = startDateDOB.AddMonths(random.Next(range));
+        randomDOB = startDateDOB.AddYears(random.Next(range));
 
         animal.DOB = randomDOB.ToString();
 
         DateOnly startDateArrivedAtZoo = new DateOnly(2015, 1, 1);
         DateOnly endDateArrivedAtZoo = new DateOnly(2020, 12, 31);
-        
+
         DateOnly randomArrivedAtZoo = startDateArrivedAtZoo.AddDays(random.Next(range));
 
         animal.ArrivedAtZoo = randomArrivedAtZoo.ToString();
 
         DateOnly now = DateOnly.FromDateTime(DateTime.Now);
         DateOnly dobParsed = DateOnly.Parse(animal.DOB);
-        animal.Age = (int)( now.DayNumber - dobParsed.DayNumber)/365;
-        
+        animal.Age = (int)(now.DayNumber - dobParsed.DayNumber) / 365;
+
 
 
         return animal;
 
-    }   
+    }
+
+    public static Enclosure createEnclosure()
+    {
+        Enclosure newEnclosure = new Enclosure();
+
+        List<string> enclosureNames = new List<string> { "Lion Enclosure", "Aviary", "Hippo Enclosure", "Giraffe Enclosure", "Reptile House" };
+
+
+        foreach (var enclosure in enclosureNames) {
+            newEnclosure.EnclosureName = enclosure;
+        }
+        return newEnclosure;  
+    }
 }

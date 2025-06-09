@@ -10,8 +10,8 @@ using ZooManagementDB;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(ZooManagementDBContext))]
-    [Migration("20250609091331_seed13")]
-    partial class seed13
+    [Migration("20250609150304_seed33")]
+    partial class seed33
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,8 +21,11 @@ namespace ZooManagement.Migrations
 
             modelBuilder.Entity("ZooManagement.Animal", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AnimalId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Age")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ArrivedAtZoo")
@@ -34,6 +37,9 @@ namespace ZooManagement.Migrations
                     b.Property<string>("DOB")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EnclosureID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -43,9 +49,23 @@ namespace ZooManagement.Migrations
                     b.Property<string>("Species")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("AnimalId");
 
                     b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("ZooManagement.Enclosure", b =>
+                {
+                    b.Property<int>("EnclosureID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EnclosureName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("EnclosureID");
+
+                    b.ToTable("Enclosure");
                 });
 #pragma warning restore 612, 618
         }

@@ -22,15 +22,16 @@ namespace ZooManagementDB
 
         // Put all the tables you want in your database here
         public DbSet<Animal> Animals { get; set; }
+        public DbSet<Enclosure> Enclosure { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // This is the configuration used for connecting to the database
-            
-            
-                optionsBuilder.UseSqlite("Filename=MyDatabase.db");
-            
+
+
+            optionsBuilder.UseSqlite("Filename=MyDatabase.db");
+
 
             //         protected override void OnModelCreating(ModelBuilder modelBuilder)
             // {
