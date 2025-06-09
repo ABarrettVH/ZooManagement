@@ -18,63 +18,64 @@ builder.Services.AddDbContext<ZooManagementDBContext>(
    options.UseSqlite("Filename=MyDatabase.db")
    .UseSeeding((context, _) =>
    {
-       int count = 20;
+   int count = 20;
+   List<string> enclosureNames = new List<string> { "Lion Enclosure", "Aviary", "Hippo Enclosure", "Giraffe Enclosure", "Reptile House" };
 
-       for (int i = 1; i <= count; i++)
+   var enclosureExists = context.Set<Enclosure>().Any();
+   if (!enclosureExists)
+   {
+       foreach (var name in enclosureNames)
        {
-           var animalExists = context.Set<Animal>().Any();
-           var enclosureExists = context.Set<Enclosure>().Any();
-           if (!enclosureExists)
-           {
-               Enclosure newEnclosure = FakeData.createEnclosure();
-               context.Set<Enclosure>().Add(newEnclosure);
-               context.SaveChanges();
-           }
-
-           if (!animalExists)
-           {
-               Animal newAnimal = FakeData.generateFakeAnimalData();
-
-               //    Console.WriteLine(newAnimal.AnimalId);
-               context.Set<Animal>().Add(newAnimal);
-
-
-           }
+           Enclosure newEnclosure = FakeData.createEnclosure(name);
+           context.Set<Enclosure>().Add(newEnclosure);
 
        }
-        context.SaveChanges();
-       
+       context.SaveChanges();
+   }
+   var animalExists = context.Set<Animal>().Any();
+       if (!animalExists)
+       {
+           for (int i = 1; i <= count; i++)
+           {
+               {
+                   Animal newAnimal = FakeData.generateFakeAnimalData(context);
+                   context.Set<Animal>().Add(newAnimal);
+               }
+           }
+           context.SaveChanges();
+       }
+
    })
-//    .UseAsyncSeeding(async (context, _, CancellationToken) =>
-//    {
-//        int count = 100;
-//        for (int i = 1; i <= count; i++)
-//        {
-//            var animalExists = await context.Set<Animal>().AnyAsync();
+   //    .UseAsyncSeeding(async (context, _, CancellationToken) =>
+   //    {
+   //        int count = 100;
+   //        for (int i = 1; i <= count; i++)
+   //        {
+   //            var animalExists = await context.Set<Animal>().AnyAsync();
 
-//            if (!animalExists)
-//            {
-//                Animal newAnimal = FakeData.generateFakeAnimalData();
-//                await context.Set<Animal>().AddAsync(newAnimal);
-//                await context.SaveChangesAsync();
-//            }
-//        }
-//    })
-   
-   
-   
+   //            if (!animalExists)
+   //            {
+   //                Animal newAnimal = FakeData.generateFakeAnimalData();
+   //                await context.Set<Animal>().AddAsync(newAnimal);
+   //                await context.SaveChangesAsync();
+   //            }
+   //        }
+   //    })
+
+
+
    )
-   
-   );   
 
- var app = builder.Build();
+   );
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    
+
 }
 
 app.UseHttpsRedirection();

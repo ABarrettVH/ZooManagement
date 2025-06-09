@@ -10,8 +10,8 @@ using ZooManagementDB;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(ZooManagementDBContext))]
-    [Migration("20250609150304_seed33")]
-    partial class seed33
+    [Migration("20250609210924_seed40")]
+    partial class seed40
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,8 @@ namespace ZooManagement.Migrations
 
                     b.HasKey("AnimalId");
 
+                    b.HasIndex("EnclosureID");
+
                     b.ToTable("Animals");
                 });
 
@@ -66,6 +68,22 @@ namespace ZooManagement.Migrations
                     b.HasKey("EnclosureID");
 
                     b.ToTable("Enclosure");
+                });
+
+            modelBuilder.Entity("ZooManagement.Animal", b =>
+                {
+                    b.HasOne("ZooManagement.Enclosure", "enclosure")
+                        .WithMany("Animals")
+                        .HasForeignKey("EnclosureID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("enclosure");
+                });
+
+            modelBuilder.Entity("ZooManagement.Enclosure", b =>
+                {
+                    b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618
         }

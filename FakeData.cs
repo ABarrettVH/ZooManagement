@@ -3,13 +3,14 @@ using Microsoft.VisualBasic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using ZooManagement;
+using ZooManagementDB;
 
 namespace ZooManagement;
 
 public class FakeData
 
 {
-    public static Animal generateFakeAnimalData()
+    public static Animal generateFakeAnimalData(Microsoft.EntityFrameworkCore.DbContext context)
     {
         List<string> AnimalSpecies = new List<string> { "lion", "giraffe", "flamingo", "owl", "lizard", "hippopotamus", "aligator", "parrot","python" };
         Animal animal = new Animal();
@@ -21,25 +22,38 @@ public class FakeData
         int speciesiter = random.Next(AnimalSpecies.Count);
         animal.Species = AnimalSpecies[speciesiter];
 
+        var enclosures = context.Set<Enclosure>().ToList();
+
         switch (animal.Species)
         {
             case "lion":
                 animal.Classification = "carnivore";
+                var lionEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Lion Enclosure"));
+                animal.EnclosureID = lionEnclosure!.EnclosureID;
                 break;
-            case "elephant":
             case "giraffe":
+                animal.Classification = "mammal";
+                var giraffeEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Giraffe Enclosure"));
+                animal.EnclosureID = giraffeEnclosure!.EnclosureID;
+                break;
             case "hippopotamus":
                 animal.Classification = "mammal";
+                var hippoEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Hippo Enclosure"));
+                animal.EnclosureID = hippoEnclosure!.EnclosureID;
                 break;
             case "flamingo":
             case "owl":
             case "parrot":
                 animal.Classification = "aviary";
+                var aviaryEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Aviary"));
+                animal.EnclosureID = aviaryEnclosure!.EnclosureID;
                 break;
             case "aligator":
             case "lizard":
             case "python":
                 animal.Classification = "reptile";
+                var reptileEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Reptile House"));
+                animal.EnclosureID = reptileEnclosure!.EnclosureID;
                 break;
 
         }
@@ -92,16 +106,11 @@ public class FakeData
 
     }
 
-    public static Enclosure createEnclosure()
+    public static Enclosure createEnclosure(string enclosureName)
     {
         Enclosure newEnclosure = new Enclosure();
-
-        List<string> enclosureNames = new List<string> { "Lion Enclosure", "Aviary", "Hippo Enclosure", "Giraffe Enclosure", "Reptile House" };
-
-
-        foreach (var enclosure in enclosureNames) {
-            newEnclosure.EnclosureName = enclosure;
-        }
+        newEnclosure.EnclosureName = enclosureName;
+        
         return newEnclosure;  
     }
 }

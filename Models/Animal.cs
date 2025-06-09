@@ -18,9 +18,12 @@ public class Animal
     public string? ArrivedAtZoo { get; set; }
 
     public int Age { get; set; }
-    
+
+   
     public int EnclosureID { get; set; }
     
-    // public IList<Enclosure>? Enclosures { get; set; }
 
+    public Enclosure enclosure { get; set; }
+    
+    
 }

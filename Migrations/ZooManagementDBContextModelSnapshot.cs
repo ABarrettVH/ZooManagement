@@ -48,6 +48,8 @@ namespace ZooManagement.Migrations
 
                     b.HasKey("AnimalId");
 
+                    b.HasIndex("EnclosureID");
+
                     b.ToTable("Animals");
                 });
 
@@ -63,6 +65,22 @@ namespace ZooManagement.Migrations
                     b.HasKey("EnclosureID");
 
                     b.ToTable("Enclosure");
+                });
+
+            modelBuilder.Entity("ZooManagement.Animal", b =>
+                {
+                    b.HasOne("ZooManagement.Enclosure", "enclosure")
+                        .WithMany("Animals")
+                        .HasForeignKey("EnclosureID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("enclosure");
+                });
+
+            modelBuilder.Entity("ZooManagement.Enclosure", b =>
+                {
+                    b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618
         }

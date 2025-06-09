@@ -5,11 +5,24 @@
 namespace ZooManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class seed33 : Migration
+    public partial class seed40 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Enclosure",
+                columns: table => new
+                {
+                    EnclosureID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EnclosureName = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enclosure", x => x.EnclosureID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Animals",
                 columns: table => new
@@ -28,20 +41,18 @@ namespace ZooManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Animals", x => x.AnimalId);
+                    table.ForeignKey(
+                        name: "FK_Animals_Enclosure_EnclosureID",
+                        column: x => x.EnclosureID,
+                        principalTable: "Enclosure",
+                        principalColumn: "EnclosureID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Enclosure",
-                columns: table => new
-                {
-                    EnclosureID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    EnclosureName = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Enclosure", x => x.EnclosureID);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Animals_EnclosureID",
+                table: "Animals",
+                column: "EnclosureID");
         }
 
         /// <inheritdoc />

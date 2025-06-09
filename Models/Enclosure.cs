@@ -8,7 +8,7 @@ public class Enclosure
     public int EnclosureID { get; set; }
     //  public int AnimalId { get; set; }
     public string? EnclosureName { get; set; }
-    // public IList<Animal>? Animals;
+    public IList<Animal>? Animals { get; set; }
    
 
 
