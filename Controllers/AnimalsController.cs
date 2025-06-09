@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 // using ZooManagement.Migrations;
 using ZooManagementDB;
+using ZooManagement.Models;
 
 namespace ZooManagement.Controllers;
 
@@ -26,6 +27,32 @@ public class AnimalController : ControllerBase
         
         var animals = _context.Animals.ToList();
         return Ok(animals);
+
+    }
+
+    [Route("GetAllAnimalsWithPagination")]
+    [HttpGet]
+    public async Task<ActionResult<PagedResponse<Animal>>> GetAllAnimalsWithPagination([FromQuery] PaginationParams paginationParams)
+    {
+
+        var animalsQuery = _context.Animals.AsQueryable();
+        var totalAnimalRecords = await animalsQuery.CountAsync();
+         var animals = await animalsQuery.Skip((paginationParams.PageNumber - 1) * paginationParams.PageSize)
+                                    .Take(paginationParams.PageSize)
+                                    .ToListAsync();
+
+        var pagedResponse = new PagedResponse<Animal>(animals, paginationParams.PageNumber, paginationParams.PageSize, totalAnimalRecords);
+
+        if (paginationParams.PageNumber == 0 || paginationParams.PageSize == 0 ) {
+            return BadRequest("Enter a page number and page size");
+        }
+        else if (pagedResponse.Data.Count == 0){
+            return BadRequest("No data for this page");
+        }
+        else {
+            return Ok(pagedResponse);
+        }
+        // return Ok(animals);
 
     }
 
