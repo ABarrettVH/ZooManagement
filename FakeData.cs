@@ -15,9 +15,6 @@ public class FakeData
         List<string> AnimalSpecies = new List<string> { "lion", "giraffe", "flamingo", "owl", "lizard", "hippopotamus", "aligator", "parrot","python" };
         Animal animal = new Animal();
 
-        // var id = 0;
-        // animal.AnimalID = id++;
-
         Random random = new Random();
         int speciesiter = random.Next(AnimalSpecies.Count);
         animal.Species = AnimalSpecies[speciesiter];
@@ -99,8 +96,6 @@ public class FakeData
         DateOnly now = DateOnly.FromDateTime(DateTime.Now);
         DateOnly dobParsed = DateOnly.Parse(animal.DOB);
         animal.Age = (int)(now.DayNumber - dobParsed.DayNumber) / 365;
-
-
 
         return animal;
 

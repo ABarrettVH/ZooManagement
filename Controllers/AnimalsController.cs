@@ -28,9 +28,24 @@ public class AnimalController : ControllerBase
     [HttpGet]
     public IActionResult GetAllAnimals()
     {
-
-        var animals = _context.Animals.ToList();
-        return Ok(animals);
+       
+        // var animals = _context.Animals.ToList();
+        var animalResponse = _context.Animals
+            .Select(x => new AnimalResponse
+            {
+                AnimalId = x.AnimalId,
+                Species = x.Species,
+                Classification = x.Classification,
+                Name = x.Name,
+                Sex = x.Sex,
+                DOB = x.DOB,
+                ArrivedAtZoo = x.ArrivedAtZoo,
+                Age = x.Age,
+                EnclosureID = x.EnclosureID
+            })
+            .ToList();
+        
+        return Ok(animalResponse);
 
     }
 
@@ -39,8 +54,21 @@ public class AnimalController : ControllerBase
     public async Task<ActionResult<PagedResponse<Animal>>> GetAllAnimalsWithPagination([FromQuery] PaginationParams paginationParams)
     {
 
-        var animalsQuery = _context.Animals.AsQueryable();
-
+        // var animalsQuery = _context.Animals.AsQueryable();
+        var animalsQuery = _context.Animals
+            .Select(x => new AnimalResponse
+            {
+                AnimalId = x.AnimalId,
+                Species = x.Species,
+                Classification = x.Classification,
+                Name = x.Name,
+                Sex = x.Sex,
+                DOB = x.DOB,
+                ArrivedAtZoo = x.ArrivedAtZoo,
+                Age = x.Age,
+                EnclosureID = x.EnclosureID
+            })
+            .AsQueryable();
 
         if (!string.IsNullOrEmpty(paginationParams.SearchTerm))
         {
@@ -89,7 +117,7 @@ public class AnimalController : ControllerBase
                                     .Take(paginationParams.PageSize)
                                     .ToListAsync();
 
-        var pagedResponse = new PagedResponse<Animal>(animals, paginationParams.PageNumber, paginationParams.PageSize, totalAnimalRecords);
+        var pagedResponse = new PagedResponse<AnimalResponse>(animals, paginationParams.PageNumber, paginationParams.PageSize, totalAnimalRecords);
 
         if (paginationParams.PageNumber == 0 || paginationParams.PageSize == 0)
         {
@@ -103,8 +131,7 @@ public class AnimalController : ControllerBase
         {
             return Ok(pagedResponse);
         }
-        // return Ok(animals);
-
+        
     }
 
     [Route("/animal/{id}")]
@@ -117,7 +144,20 @@ public class AnimalController : ControllerBase
         }
         else
         {
-            var animals = _context.Animals.ToList();
+            var animals = _context.Animals
+            .Select(x => new AnimalResponse
+            {
+                AnimalId = x.AnimalId,
+                Species = x.Species,
+                Classification = x.Classification,
+                Name = x.Name,
+                Sex = x.Sex,
+                DOB = x.DOB,
+                ArrivedAtZoo = x.ArrivedAtZoo,
+                Age = x.Age,
+                EnclosureID = x.EnclosureID
+            })
+            .ToList();
             var animal = animals.FirstOrDefault(u => u.AnimalId == id);
             if (animal != null)
             {
@@ -135,8 +175,21 @@ public class AnimalController : ControllerBase
     [HttpGet]
     public IActionResult GetAnimalBySpecies(string species)
     {
-        var animals = _context.Animals.ToList();
-        var returnedAnimalList = animals.FindAll(t => t.Species.Equals(species, StringComparison.OrdinalIgnoreCase));
+        var animals = _context.Animals
+            .Select(x => new AnimalResponse
+            {
+                AnimalId = x.AnimalId,
+                Species = x.Species,
+                Classification = x.Classification,
+                Name = x.Name,
+                Sex = x.Sex,
+                DOB = x.DOB,
+                ArrivedAtZoo = x.ArrivedAtZoo,
+                Age = x.Age,
+                EnclosureID = x.EnclosureID
+            })
+            .ToList();
+        var returnedAnimalList = animals.FindAll(t => t.Species!.Equals(species, StringComparison.OrdinalIgnoreCase));
         if (returnedAnimalList.Count > 0)
         {
             return Ok(returnedAnimalList);
@@ -145,19 +198,15 @@ public class AnimalController : ControllerBase
         {
             return NotFound("Animal species not found");
         }
-
-
     }
 
     [Route("/animals")]
     [HttpPost]
     public IActionResult AddAnimal(Animal animal)
     {
-        var newAnimal = new Animal { Name = animal.Name.ToLower(), Species = animal.Species.ToLower(), DOB = animal.DOB, Sex = animal.Sex.ToLower(), Classification = animal.Classification.ToLower(), ArrivedAtZoo = animal.ArrivedAtZoo };
-        Console.WriteLine(newAnimal.Sex);
-        Console.WriteLine(newAnimal.DOB + " " + newAnimal.ArrivedAtZoo);
-        var newEnclosure = new Enclosure();
+        var newAnimal = new Animal { Name = animal.Name!.ToLower(), Species = animal.Species!.ToLower(), DOB = animal.DOB, Sex = animal.Sex!.ToLower(), Classification = animal.Classification!.ToLower(), ArrivedAtZoo = animal.ArrivedAtZoo };
         var enclosures = _context.Enclosure.ToList();
+        var animals = _context.Animals.ToList();
 
         string pattern = @"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$";
         
@@ -168,19 +217,21 @@ public class AnimalController : ControllerBase
         else if((newAnimal.Sex != "male") && ( newAnimal.Sex != "female"))  {
             return BadRequest("Enter male or female for sex");
         }
-        else if(! Regex.IsMatch(newAnimal.DOB, pattern ) || ! Regex.IsMatch(newAnimal.ArrivedAtZoo, pattern ) ) {
+        else if(! Regex.IsMatch(newAnimal.DOB!, pattern ) || ! Regex.IsMatch(newAnimal.ArrivedAtZoo!, pattern ) ) {
             return BadRequest("Enter date in dd/mm/yyyy format");
         }
         else
         {
-           
-            switch (newAnimal.Species)
+           switch (newAnimal.Species)
             {
-                case "Lion":
-                    if (enclosures.Count(x => x.EnclosureName == "lion enclosure") < 2)
+                case "lion":
+                    var lionEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Lion Enclosure"));
+                    if (animals.Count(x => x.EnclosureID.Equals(lionEnclosure!.EnclosureID)) < 200)
+                    // if (enclosures.Count(x => x.EnclosureName == "lion enclosure") < 2)
                     {
-                        newEnclosure.EnclosureName = "lion enclosure";
+                        // newEnclosure.EnclosureName = "lion enclosure";
                         newAnimal.Classification = "carnivore";
+                        newAnimal.EnclosureID = lionEnclosure!.EnclosureID;
                     }
                     else
                     {
@@ -190,10 +241,14 @@ public class AnimalController : ControllerBase
                 case "flamingo":
                 case "owl":
                 case "parrot":
-                    if (enclosures.Count(x => x.EnclosureName == "aviary") < 50)
+                    var aviaryEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Aviary"));
+                    if (animals.Count(x => x.EnclosureID.Equals(aviaryEnclosure!.EnclosureID)) < 50)
+                    // if (enclosures.Count(x => x.EnclosureName == "aviary") < 50)
                     {
-                        newEnclosure.EnclosureName = "aviary";
+                        // newEnclosure.EnclosureName = "aviary";
                         newAnimal.Classification = "aviary";
+
+                        newAnimal.EnclosureID = aviaryEnclosure!.EnclosureID;
                     }
                     else
                     {
@@ -203,10 +258,14 @@ public class AnimalController : ControllerBase
                 case "aligator":
                 case "lizard":
                 case "python":
-                    if (enclosures.Count(x => x.EnclosureName == "reptile house") < 40)
+                    var reptileEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Reptile House"));
+                    if (animals.Count(x => x.EnclosureID.Equals(reptileEnclosure!.EnclosureID)) < 40)
+                    // if (enclosures.Count(x => x.EnclosureName == "reptile house") < 40)
                     {
-                        newEnclosure.EnclosureName = "reptile house";
+                        // newEnclosure.EnclosureName = "reptile house";
                         newAnimal.Classification = "reptile";
+                        
+                        newAnimal.EnclosureID = reptileEnclosure!.EnclosureID;
                     }
                     else
                     {
@@ -214,10 +273,13 @@ public class AnimalController : ControllerBase
                     }
                     break;
                 case "hippopotamus":
-                    if (enclosures.Count(x => x.EnclosureName == "hippo enclosure") < 6)
+                    var hippoEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Hippo Enclosure"));
+                    if (animals.Count(x => x.EnclosureID.Equals(hippoEnclosure!.EnclosureID)) < 6)
+                    // if (enclosures.Count(x => x.EnclosureName == "hippo enclosure") < 6)
                     {
-                        newEnclosure.EnclosureName = "hippo enclosure";
+                        // newEnclosure.EnclosureName = "hippo enclosure";
                         newAnimal.Classification = "mammal";
+                        newAnimal.EnclosureID = hippoEnclosure!.EnclosureID;
                     }
                     else
                     {
@@ -225,10 +287,14 @@ public class AnimalController : ControllerBase
                     }
                     break;
                 case "giraffe":
-                    if (enclosures.Count(x => x.EnclosureName == "giraffe enclosure") < 10)
+                    var giraffeEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Giraffe Enclosure"));
+                    if (animals.Count(x => x.EnclosureID.Equals(giraffeEnclosure!.EnclosureID)) < 10)
+                    // if (enclosures.Count(x => x.EnclosureName == "giraffe enclosure") < 10)
                     {
-                        newEnclosure.EnclosureName = "gireaffe enclosure";
+                        // newEnclosure.EnclosureName = "gireaffe enclosure";
                         newAnimal.Classification = "mammal";
+
+                        newAnimal.EnclosureID = giraffeEnclosure!.EnclosureID;
                     }
                     else
                     {
@@ -240,13 +306,26 @@ public class AnimalController : ControllerBase
 
 
         DateOnly now = DateOnly.FromDateTime(DateTime.Now);
-        DateOnly dobParsed = DateOnly.Parse(animal.DOB);
-        newAnimal.Age = (int)(now.DayNumber - dobParsed.DayNumber) / 365;
-        _context.Add(newAnimal);
-        _context.Add(newEnclosure);
+        DateOnly dobParsed = DateOnly.Parse(animal.DOB!);
 
+        newAnimal.Age = (int)(now.DayNumber - dobParsed.DayNumber) / 365;
+        
+        _context.Add(newAnimal);
         _context.SaveChanges();
-        return Ok(newAnimal);
+            var id = newAnimal.AnimalId;
+            var createdAnimal = _context.Animals.Select(x => new AnimalResponse
+            {
+                AnimalId = x.AnimalId,
+                Species = x.Species,
+                Classification = x.Classification,
+                Name = x.Name,
+                Sex = x.Sex,
+                DOB = x.DOB,
+                ArrivedAtZoo = x.ArrivedAtZoo,
+                Age = x.Age,
+                EnclosureID = x.EnclosureID
+            }).Where(x => x.AnimalId == id);            
+        return Ok(createdAnimal);
         }
     }
 }
