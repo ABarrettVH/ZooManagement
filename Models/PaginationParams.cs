@@ -7,12 +7,9 @@ namespace ZooManagement.Models
 
     private int _pageSize = 10;
     public int PageSize {get; set;}
-    // {
-    //     get => _pageSize;
-    //     set => _pageSize;
+     public string? SearchTerm { get; set; }
 
 
-    //     // set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
-    // }
+     public string? Category {get; set;}
 }
 }

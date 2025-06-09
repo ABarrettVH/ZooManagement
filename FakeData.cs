@@ -1,5 +1,6 @@
 // using Bogus;
 using Microsoft.VisualBasic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using ZooManagement;
 
@@ -72,6 +73,12 @@ public class FakeData
         DateOnly randomArrivedAtZoo = startDateArrivedAtZoo.AddDays(random.Next(range));
 
         animal.ArrivedAtZoo = randomArrivedAtZoo.ToString();
+
+        DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+        DateOnly dobParsed = DateOnly.Parse(animal.DOB);
+        animal.Age = (int)( now.DayNumber - dobParsed.DayNumber)/365;
+        
+
 
         return animal;
 

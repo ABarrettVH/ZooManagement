@@ -12,6 +12,8 @@ public class Animal
 
     public string? DOB { get; set; }
     public string? ArrivedAtZoo { get; set; } 
+
+    public int Age { get; set; }
     
     
 }
