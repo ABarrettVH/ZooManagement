@@ -43,6 +43,7 @@ public class ZooKeeperController : ControllerBase
             .Select(x => new ZooKeeperResponse
             {
                 ZooKeeperID = x.ZooKeeperID,
+                ZooKeeperName = (from record in _context.ZooKeeper where record.ZooKeeperID == x.ZooKeeperID select record.ZooKeeperName).FirstOrDefault(),
                 EnclosureName = (from record in _context.Enclosure where record.EnclosureID == x.EnclosureID select record.EnclosureName).ToList(),
                 Animals = (from record in _context.Animals where record.EnclosureID == x.EnclosureID select record.AnimalId).ToList(),
                 

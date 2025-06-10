@@ -8,7 +8,7 @@ public class ZooKeeperResponse
 
   public int ZooKeeperID { get; set; }
 
-  // public string? ZooKeeperName { get; set; }
+  public string? ZooKeeperName { get; set; }
   public List<string>? EnclosureName { get; set; }
 
   public List<int>? Animals { get; set; }
