@@ -12,7 +12,7 @@ public class FakeData
 {
     public static Animal generateFakeAnimalData(Microsoft.EntityFrameworkCore.DbContext context)
     {
-        List<string> AnimalSpecies = new List<string> { "lion", "giraffe", "flamingo", "owl", "lizard", "hippopotamus", "aligator", "parrot","python" };
+        List<string> AnimalSpecies = new List<string> { "lion", "giraffe", "flamingo", "owl", "lizard", "hippopotamus", "aligator", "parrot", "python" };
         Animal animal = new Animal();
 
         Random random = new Random();
@@ -101,11 +101,40 @@ public class FakeData
 
     }
 
-    public static Enclosure createEnclosure(string enclosureName)
-    {
+    public static Enclosure createEnclosure(string enclosureName, List<int> zooKeeperids)
+    {   
+
+        
+
         Enclosure newEnclosure = new Enclosure();
         newEnclosure.EnclosureName = enclosureName;
+
+        Random random = new Random();
+        int iter = random.Next(zooKeeperids.Count);
+        newEnclosure.ZooKeeperID = zooKeeperids[iter];
+
         
-        return newEnclosure;  
+
+        return newEnclosure;
+    }
+    
+     public static ZooKeeper createZooKeeper()
+    {
+        ZooKeeper newZooKeeper = new ZooKeeper();
+        
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        //char[] result = new char[8];
+        string result = "";
+        
+        for (int i = 0; i < 8; i++)
+        {
+            result += chars[random.Next(chars.Length)];
+        }
+
+        
+        newZooKeeper.ZooKeeperName = result;
+        
+        return newZooKeeper;  
     }
 }

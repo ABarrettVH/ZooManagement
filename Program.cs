@@ -18,16 +18,40 @@ builder.Services.AddDbContext<ZooManagementDBContext>(
    options.UseSqlite("Filename=MyDatabase.db")
    .UseSeeding((context, _) =>
    {
-   int count = 50;
+   int animalCount = 50;
+       int zooKeeperCount = 20;
    List<string> enclosureNames = new List<string> { "Lion Enclosure", "Aviary", "Reptile House",  "Giraffe Enclosure", "Hippo Enclosure" };
+
+       var ZooKeeperExists = context.Set<ZooKeeper>().Any();
+
+       if (!ZooKeeperExists)
+       {
+         for (int i = 1; i <= zooKeeperCount; i++)
+           {
+               {
+                   ZooKeeper newZooKeeper = FakeData.createZooKeeper();
+                   context.Set<ZooKeeper>().Add(newZooKeeper);
+               }
+           }
+           context.SaveChanges();
+       }
 
    var enclosureExists = context.Set<Enclosure>().Any();
    if (!enclosureExists)
    {
        foreach (var name in enclosureNames)
        {
-           Enclosure newEnclosure = FakeData.createEnclosure(name);
-           context.Set<Enclosure>().Add(newEnclosure);
+            // var zookeepers =  context.Set<ZooKeeper>().ToList();
+            var zookeeperids = context.Set<ZooKeeper>().Select(r => r.ZooKeeperID).ToList();
+            
+            Enclosure newEnclosure = FakeData.createEnclosure(name,zookeeperids);
+            context.Set<Enclosure>().Add(newEnclosure);
+            context.SaveChanges();
+            EnclosureZooKeeper newEnclosureZooKeeper = new EnclosureZooKeeper();
+            newEnclosureZooKeeper.EnclosureID = newEnclosure.EnclosureID;
+            newEnclosureZooKeeper.ZooKeeperID = newEnclosure.ZooKeeperID;
+            context.Set<EnclosureZooKeeper>().Add(newEnclosureZooKeeper);
+            
 
        }
        context.SaveChanges();
@@ -35,7 +59,7 @@ builder.Services.AddDbContext<ZooManagementDBContext>(
    var animalExists = context.Set<Animal>().Any();
        if (!animalExists)
        {
-           for (int i = 1; i <= count; i++)
+           for (int i = 1; i <= animalCount; i++)
            {
                {
                    Animal newAnimal = FakeData.generateFakeAnimalData(context);

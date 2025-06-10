@@ -23,6 +23,10 @@ namespace ZooManagementDB
         // Put all the tables you want in your database here
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Enclosure> Enclosure { get; set; }
+        public DbSet<ZooKeeper> ZooKeeper { get; set; }
+
+        public DbSet<EnclosureZooKeeper> EnclosureZooKeeper { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -236,7 +236,7 @@ public class AnimalController : ControllerBase
             {
                 case "lion":
                     var lionEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Lion Enclosure"));
-                    if (animals.Count(x => x.EnclosureID.Equals(lionEnclosure!.EnclosureID)) < 200)
+                    if (animals.Count(x => x.EnclosureID.Equals(lionEnclosure!.EnclosureID)) < 10)
                     // if (enclosures.Count(x => x.EnclosureName == "lion enclosure") < 2)
                     {
                         // newEnclosure.EnclosureName = "lion enclosure";

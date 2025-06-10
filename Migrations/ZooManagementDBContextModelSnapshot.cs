@@ -62,9 +62,45 @@ namespace ZooManagement.Migrations
                     b.Property<string>("EnclosureName")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("ZooKeeperID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("EnclosureID");
 
+                    b.HasIndex("ZooKeeperID");
+
                     b.ToTable("Enclosure");
+                });
+
+            modelBuilder.Entity("ZooManagement.EnclosureZooKeeper", b =>
+                {
+                    b.Property<int>("EnclosureZooKeeperID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EnclosureID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ZooKeeperID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("EnclosureZooKeeperID");
+
+                    b.ToTable("EnclosureZooKeeper");
+                });
+
+            modelBuilder.Entity("ZooManagement.ZooKeeper", b =>
+                {
+                    b.Property<int>("ZooKeeperID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ZooKeeperName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ZooKeeperID");
+
+                    b.ToTable("ZooKeeper");
                 });
 
             modelBuilder.Entity("ZooManagement.Animal", b =>
@@ -78,7 +114,21 @@ namespace ZooManagement.Migrations
 
             modelBuilder.Entity("ZooManagement.Enclosure", b =>
                 {
+                    b.HasOne("ZooManagement.ZooKeeper", null)
+                        .WithMany("Enclosures")
+                        .HasForeignKey("ZooKeeperID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ZooManagement.Enclosure", b =>
+                {
                     b.Navigation("Animals");
+                });
+
+            modelBuilder.Entity("ZooManagement.ZooKeeper", b =>
+                {
+                    b.Navigation("Enclosures");
                 });
 #pragma warning restore 612, 618
         }

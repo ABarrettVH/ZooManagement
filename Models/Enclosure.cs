@@ -10,6 +10,7 @@ public class Enclosure
     public string? EnclosureName { get; set; }
     public IList<Animal>? Animals { get; set; }
    
-
+    public int ZooKeeperID { get; set; }
+    // public IList<ZooKeeper>? ZooKeepers {get; set;}
 
 }

@@ -5,22 +5,56 @@
 namespace ZooManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class seed44 : Migration
+    public partial class seed49 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "EnclosureZooKeeper",
+                columns: table => new
+                {
+                    EnclosureZooKeeperID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ZooKeeperID = table.Column<int>(type: "INTEGER", nullable: false),
+                    EnclosureID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnclosureZooKeeper", x => x.EnclosureZooKeeperID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ZooKeeper",
+                columns: table => new
+                {
+                    ZooKeeperID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ZooKeeperName = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ZooKeeper", x => x.ZooKeeperID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Enclosure",
                 columns: table => new
                 {
                     EnclosureID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EnclosureName = table.Column<string>(type: "TEXT", nullable: true)
+                    EnclosureName = table.Column<string>(type: "TEXT", nullable: true),
+                    ZooKeeperID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enclosure", x => x.EnclosureID);
+                    table.ForeignKey(
+                        name: "FK_Enclosure_ZooKeeper_ZooKeeperID",
+                        column: x => x.ZooKeeperID,
+                        principalTable: "ZooKeeper",
+                        principalColumn: "ZooKeeperID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,6 +87,11 @@ namespace ZooManagement.Migrations
                 name: "IX_Animals_EnclosureID",
                 table: "Animals",
                 column: "EnclosureID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enclosure_ZooKeeperID",
+                table: "Enclosure",
+                column: "ZooKeeperID");
         }
 
         /// <inheritdoc />
@@ -62,7 +101,13 @@ namespace ZooManagement.Migrations
                 name: "Animals");
 
             migrationBuilder.DropTable(
+                name: "EnclosureZooKeeper");
+
+            migrationBuilder.DropTable(
                 name: "Enclosure");
+
+            migrationBuilder.DropTable(
+                name: "ZooKeeper");
         }
     }
 }
