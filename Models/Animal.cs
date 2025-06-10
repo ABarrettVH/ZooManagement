@@ -13,6 +13,8 @@ public class Animal
     [JsonIgnore]
     public int AnimalId { get; set; }
     public string? Species { get; set; }
+    
+    [JsonIgnore] 
     public string? Classification { get; set; }
     public string? Name { get; set; }
     public string? Sex { get; set; }

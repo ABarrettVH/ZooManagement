@@ -46,7 +46,7 @@ public class AnimalController : ControllerBase
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
                 EnclosureID = x.EnclosureID, 
-                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,         
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,         
             })
             .ToList();
           
@@ -73,7 +73,7 @@ public class AnimalController : ControllerBase
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
-                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
             })
             .AsQueryable();
 
@@ -87,12 +87,13 @@ public class AnimalController : ControllerBase
                 (i.Species != null && i.Species.ToLower().Contains(paginationParams.SearchTerm.ToLower())) ||
                 (i.Classification != null && i.Classification.ToLower().Contains(paginationParams.SearchTerm.ToLower())) ||
                 (isAgeSearch && i.Age == ageSearch) ||
-                (i.ArrivedAtZoo != null && i.ArrivedAtZoo.Contains(paginationParams.SearchTerm))
+                (i.ArrivedAtZoo != null && i.ArrivedAtZoo.Contains(paginationParams.SearchTerm)) ||
+                (i.EnclosureName != null && i.EnclosureName.ToLower().Contains(paginationParams.SearchTerm.ToLower()))
             );
         }
 
         if (string.IsNullOrEmpty(paginationParams.orderByCategory)){
-             animalsQuery = animalsQuery.OrderBy(b => b.Species);
+             animalsQuery = animalsQuery.OrderBy(b => b.EnclosureID).ThenBy(b => b.Name);
         }
         else
         {
@@ -163,7 +164,7 @@ public class AnimalController : ControllerBase
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
-                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
             })
             .ToList();
             var animal = animals.FirstOrDefault(u => u.AnimalId == id);
@@ -195,7 +196,7 @@ public class AnimalController : ControllerBase
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
-                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
             })
             .ToList();
         var returnedAnimalList = animals.FindAll(t => t.Species!.Equals(species, StringComparison.OrdinalIgnoreCase));
@@ -213,7 +214,7 @@ public class AnimalController : ControllerBase
     [HttpPost]
     public IActionResult AddAnimal(Animal animal)
     {
-        var newAnimal = new Animal { Name = animal.Name!.ToLower(), Species = animal.Species!.ToLower(), DOB = animal.DOB, Sex = animal.Sex!.ToLower(), Classification = animal.Classification!.ToLower(), ArrivedAtZoo = animal.ArrivedAtZoo };
+        var newAnimal = new Animal { Name = animal.Name!.ToLower(), Species = animal.Species!.ToLower(), DOB = animal.DOB, Sex = animal.Sex!.ToLower(), ArrivedAtZoo = animal.ArrivedAtZoo };
         var enclosures = _context.Enclosure.ToList();
         var animals = _context.Animals.ToList();
 
@@ -333,7 +334,7 @@ public class AnimalController : ControllerBase
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
-                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
             }).Where(x => x.AnimalId == id);            
         return Ok(createdAnimal);
         }

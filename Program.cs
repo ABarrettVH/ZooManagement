@@ -18,8 +18,8 @@ builder.Services.AddDbContext<ZooManagementDBContext>(
    options.UseSqlite("Filename=MyDatabase.db")
    .UseSeeding((context, _) =>
    {
-   int count = 20;
-   List<string> enclosureNames = new List<string> { "Lion Enclosure", "Aviary", "Hippo Enclosure", "Giraffe Enclosure", "Reptile House" };
+   int count = 50;
+   List<string> enclosureNames = new List<string> { "Lion Enclosure", "Aviary", "Reptile House",  "Giraffe Enclosure", "Hippo Enclosure" };
 
    var enclosureExists = context.Set<Enclosure>().Any();
    if (!enclosureExists)

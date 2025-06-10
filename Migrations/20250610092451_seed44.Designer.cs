@@ -10,8 +10,8 @@ using ZooManagementDB;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(ZooManagementDBContext))]
-    [Migration("20250609230816_seed43")]
-    partial class seed43
+    [Migration("20250610092451_seed44")]
+    partial class seed44
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
