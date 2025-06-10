@@ -246,9 +246,8 @@ public class AnimalController : ControllerBase
                 case "lion":
                     var lionEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Lion Enclosure"));
                     if (animals.Count(x => x.EnclosureID.Equals(lionEnclosure!.EnclosureID)) < 10)
-                    // if (enclosures.Count(x => x.EnclosureName == "lion enclosure") < 2)
                     {
-                        // newEnclosure.EnclosureName = "lion enclosure";
+                        
                         newAnimal.Classification = "carnivore";
                         newAnimal.EnclosureID = lionEnclosure!.EnclosureID;
                     }
@@ -262,9 +261,9 @@ public class AnimalController : ControllerBase
                 case "parrot":
                     var aviaryEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Aviary"));
                     if (animals.Count(x => x.EnclosureID.Equals(aviaryEnclosure!.EnclosureID)) < 50)
-                    // if (enclosures.Count(x => x.EnclosureName == "aviary") < 50)
+                    
                     {
-                        // newEnclosure.EnclosureName = "aviary";
+                        
                         newAnimal.Classification = "aviary";
 
                         newAnimal.EnclosureID = aviaryEnclosure!.EnclosureID;
@@ -279,9 +278,9 @@ public class AnimalController : ControllerBase
                 case "python":
                     var reptileEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Reptile House"));
                     if (animals.Count(x => x.EnclosureID.Equals(reptileEnclosure!.EnclosureID)) < 40)
-                    // if (enclosures.Count(x => x.EnclosureName == "reptile house") < 40)
+                    
                     {
-                        // newEnclosure.EnclosureName = "reptile house";
+                        
                         newAnimal.Classification = "reptile";
                         
                         newAnimal.EnclosureID = reptileEnclosure!.EnclosureID;
@@ -294,9 +293,9 @@ public class AnimalController : ControllerBase
                 case "hippopotamus":
                     var hippoEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Hippo Enclosure"));
                     if (animals.Count(x => x.EnclosureID.Equals(hippoEnclosure!.EnclosureID)) < 6)
-                    // if (enclosures.Count(x => x.EnclosureName == "hippo enclosure") < 6)
+                    
                     {
-                        // newEnclosure.EnclosureName = "hippo enclosure";
+                        
                         newAnimal.Classification = "mammal";
                         newAnimal.EnclosureID = hippoEnclosure!.EnclosureID;
                     }
@@ -308,9 +307,9 @@ public class AnimalController : ControllerBase
                 case "giraffe":
                     var giraffeEnclosure = enclosures.Find(e => e.EnclosureName!.Equals("Giraffe Enclosure"));
                     if (animals.Count(x => x.EnclosureID.Equals(giraffeEnclosure!.EnclosureID)) < 10)
-                    // if (enclosures.Count(x => x.EnclosureName == "giraffe enclosure") < 10)
+                    
                     {
-                        // newEnclosure.EnclosureName = "gireaffe enclosure";
+                        
                         newAnimal.Classification = "mammal";
 
                         newAnimal.EnclosureID = giraffeEnclosure!.EnclosureID;

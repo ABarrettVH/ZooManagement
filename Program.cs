@@ -39,19 +39,20 @@ builder.Services.AddDbContext<ZooManagementDBContext>(
    var enclosureExists = context.Set<Enclosure>().Any();
    if (!enclosureExists)
    {
-       foreach (var name in enclosureNames)
-       {
-            // var zookeepers =  context.Set<ZooKeeper>().ToList();
-            var zookeeperids = context.Set<ZooKeeper>().Select(r => r.ZooKeeperID).ToList();
-            
-            Enclosure newEnclosure = FakeData.createEnclosure(name,zookeeperids);
-            context.Set<Enclosure>().Add(newEnclosure);
-            context.SaveChanges();
-            EnclosureZooKeeper newEnclosureZooKeeper = new EnclosureZooKeeper();
-            newEnclosureZooKeeper.EnclosureID = newEnclosure.EnclosureID;
-            newEnclosureZooKeeper.ZooKeeperID = newEnclosure.ZooKeeperID;
-            context.Set<EnclosureZooKeeper>().Add(newEnclosureZooKeeper);
-            
+           foreach (var name in enclosureNames)
+           {
+                // var zookeepers =  context.Set<ZooKeeper>().ToList();
+               var zookeeperids = context.Set<ZooKeeper>().Select(r => r.ZooKeeperID).ToList();
+
+               Enclosure newEnclosure = FakeData.createEnclosure(name, zookeeperids);
+               context.Set<Enclosure>().Add(newEnclosure);
+               context.SaveChanges();
+               EnclosureZooKeeper newEnclosureZooKeeper = new EnclosureZooKeeper();
+               newEnclosureZooKeeper.EnclosureID = newEnclosure.EnclosureID;
+               newEnclosureZooKeeper.ZooKeeperID = newEnclosure.ZooKeeperID;
+               context.Set<EnclosureZooKeeper>().Add(newEnclosureZooKeeper);
+
+                        
 
        }
        context.SaveChanges();

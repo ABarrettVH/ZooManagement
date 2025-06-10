@@ -2,15 +2,12 @@ using System.Text.Json.Serialization;
 
 namespace ZooManagement;
 
-public class ZooKeeperResponse
+public class CreateZooKeeper
 {
   [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 
   public int ZooKeeperID { get; set; }
-
-  // public string? ZooKeeperName { get; set; }
-  public List<string>? EnclosureName { get; set; }
-
-  public List<int>? Animals { get; set; }
+  public string? ZooKeeperName { get; set; }
+  public string? EnclosureName { get; set; }
 
 }
