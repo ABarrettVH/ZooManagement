@@ -46,7 +46,9 @@ public class AnimalController : ControllerBase
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
                 EnclosureID = x.EnclosureID, 
-                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,         
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
+                ZooKeeperName = _context.ZooKeeper.FirstOrDefault(z => z.ZooKeeperID == _context.EnclosureZooKeeper.FirstOrDefault(ez => ez.EnclosureID == x.EnclosureID)!.ZooKeeperID)!.ZooKeeperName,           
+         
             })
             .ToList();
           
@@ -74,6 +76,9 @@ public class AnimalController : ControllerBase
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
                 EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
+                ZooKeeperName = _context.ZooKeeper.FirstOrDefault(z => z.ZooKeeperID == _context.EnclosureZooKeeper.FirstOrDefault(ez => ez.EnclosureID == x.EnclosureID)!.ZooKeeperID)!.ZooKeeperName,           
+
+
             })
             .AsQueryable();
 
@@ -88,7 +93,8 @@ public class AnimalController : ControllerBase
                 (i.Classification != null && i.Classification.ToLower().Contains(paginationParams.SearchTerm.ToLower())) ||
                 (isAgeSearch && i.Age == ageSearch) ||
                 (i.ArrivedAtZoo != null && i.ArrivedAtZoo.Contains(paginationParams.SearchTerm)) ||
-                (i.EnclosureName != null && i.EnclosureName.ToLower().Contains(paginationParams.SearchTerm.ToLower()))
+                (i.EnclosureName != null && i.EnclosureName.ToLower().Contains(paginationParams.SearchTerm.ToLower())) ||
+                (i.ZooKeeperName != null && i.ZooKeeperName.ToLower().Contains(paginationParams.SearchTerm.ToLower()))
             );
         }
 
@@ -165,6 +171,7 @@ public class AnimalController : ControllerBase
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
                 EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
+                ZooKeeperName = _context.ZooKeeper.FirstOrDefault(z => z.ZooKeeperID == _context.EnclosureZooKeeper.FirstOrDefault(ez => ez.EnclosureID == x.EnclosureID)!.ZooKeeperID)!.ZooKeeperName,           
             })
             .ToList();
             var animal = animals.FirstOrDefault(u => u.AnimalId == id);
@@ -197,6 +204,8 @@ public class AnimalController : ControllerBase
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
                 EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
+                ZooKeeperName = _context.ZooKeeper.FirstOrDefault(z => z.ZooKeeperID == _context.EnclosureZooKeeper.FirstOrDefault(ez => ez.EnclosureID == x.EnclosureID)!.ZooKeeperID)!.ZooKeeperName,           
+                
             })
             .ToList();
         var returnedAnimalList = animals.FindAll(t => t.Species!.Equals(species, StringComparison.OrdinalIgnoreCase));
@@ -335,6 +344,8 @@ public class AnimalController : ControllerBase
                 Age = x.Age,
                 EnclosureID = x.EnclosureID,
                 EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID)!.EnclosureName,
+                ZooKeeperName = _context.ZooKeeper.FirstOrDefault(z => z.ZooKeeperID == _context.EnclosureZooKeeper.FirstOrDefault(ez => ez.EnclosureID == x.EnclosureID)!.ZooKeeperID)!.ZooKeeperName,           
+
             }).Where(x => x.AnimalId == id);            
         return Ok(createdAnimal);
         }

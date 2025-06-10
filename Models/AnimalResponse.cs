@@ -25,8 +25,10 @@ public class AnimalResponse
 
 
   public int EnclosureID { get; set; }
-    
-  public string? EnclosureName { get; set; }  
+
+  public string? EnclosureName { get; set; }
+  
+  public string? ZooKeeperName { get; set; }  
     
     // [JsonIgnore]
   // public Enclosure enclosure { get; set; }
