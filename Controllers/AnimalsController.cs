@@ -7,6 +7,9 @@ using ZooManagement.Models;
 using System.Reflection;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using SQLitePCL;
+using System.Linq.Expressions;
 
 namespace ZooManagement.Controllers;
 
@@ -28,8 +31,9 @@ public class AnimalController : ControllerBase
     [HttpGet]
     public IActionResult GetAllAnimals()
     {
-       
+
         // var animals = _context.Animals.ToList();
+      
         var animalResponse = _context.Animals
             .Select(x => new AnimalResponse
             {
@@ -41,10 +45,11 @@ public class AnimalController : ControllerBase
                 DOB = x.DOB,
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
-                EnclosureID = x.EnclosureID
+                EnclosureID = x.EnclosureID, 
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,         
             })
             .ToList();
-        
+          
         return Ok(animalResponse);
 
     }
@@ -56,6 +61,7 @@ public class AnimalController : ControllerBase
 
         // var animalsQuery = _context.Animals.AsQueryable();
         var animalsQuery = _context.Animals
+        
             .Select(x => new AnimalResponse
             {
                 AnimalId = x.AnimalId,
@@ -66,7 +72,8 @@ public class AnimalController : ControllerBase
                 DOB = x.DOB,
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
-                EnclosureID = x.EnclosureID
+                EnclosureID = x.EnclosureID,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
             })
             .AsQueryable();
 
@@ -155,7 +162,8 @@ public class AnimalController : ControllerBase
                 DOB = x.DOB,
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
-                EnclosureID = x.EnclosureID
+                EnclosureID = x.EnclosureID,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
             })
             .ToList();
             var animal = animals.FirstOrDefault(u => u.AnimalId == id);
@@ -186,7 +194,8 @@ public class AnimalController : ControllerBase
                 DOB = x.DOB,
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
-                EnclosureID = x.EnclosureID
+                EnclosureID = x.EnclosureID,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
             })
             .ToList();
         var returnedAnimalList = animals.FindAll(t => t.Species!.Equals(species, StringComparison.OrdinalIgnoreCase));
@@ -323,7 +332,8 @@ public class AnimalController : ControllerBase
                 DOB = x.DOB,
                 ArrivedAtZoo = x.ArrivedAtZoo,
                 Age = x.Age,
-                EnclosureID = x.EnclosureID
+                EnclosureID = x.EnclosureID,
+                EnclosureName = _context.Enclosure.FirstOrDefault(i => i.EnclosureID == x.EnclosureID).EnclosureName,
             }).Where(x => x.AnimalId == id);            
         return Ok(createdAnimal);
         }
